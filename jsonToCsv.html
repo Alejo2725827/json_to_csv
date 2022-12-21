@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button onclick="generarCsv()">Generar Csv</button>
+</body>
+
+</html>
+<script>
+    function convertToCSV(objArray) {
+        var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+        var str = '';
+
+        for (var i = 0; i < array.length; i++) {
+            var line = '';
+            for (var index in array[i]) {
+                if (line != '') line += ','
+
+                line += array[i][index];
+            }
+
+            str += line + '\r\n';
+        }
+
+        return str;
+    }
+
+    function exportCSVFile(headers, items, fileTitle) {
+        if (headers) {
+            items.unshift(headers);
+        }
+
+        // Convert Object to JSON
+        var jsonObject = JSON.stringify(items);
+
+        var csv = this.convertToCSV(jsonObject);
+
+        var exportedFilenmae = fileTitle + '.csv' || 'export.csv';
+
+        var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        if (navigator.msSaveBlob) { // IE 10+
+            navigator.msSaveBlob(blob, exportedFilenmae);
+        } else {
+            var link = document.createElement("a");
+            if (link.download !== undefined) { // feature detection
+                // Browsers that support HTML5 download attribute
+                var url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", exportedFilenmae);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+    }
+
+    var headers = {
+        NUMFILA: "NUMFILA".replace(/,/g, ''),
+        ID_SALUS: "ID_SALUS".replace(/,/g, ''),
+        CARNET: "CARNET".replace(/,/g, ''),
+        TIPODOC: "TIPODOC".replace(/,/g, ''),
+        DOCUMENTO: "DOCUMENTO".replace(/,/g, ''),
+        APELLIDO1: "APELLIDO1".replace(/,/g, ''),
+        APELLIDO2: "APELLIDO2".replace(/,/g, ''),
+        NOMBRE1: "NOMBRE1".replace(/,/g, ''),
+        NOMBRE2: "NOMBRE2".replace(/,/g, ''),
+        FECHANAC: "FECHANAC".replace(/,/g, ''),
+        SEXO: "SEXO".replace(/,/g, ''),
+        DPTO: "DPTO".replace(/,/g, ''),
+        ZONA: "ZONA".replace(/,/g, ''),
+        ESTADO: "ESTADO".replace(/,/g, ''),
+        CODINST: "CODINST".replace(/,/g, ''),
+        REGIMEN: "REGIMEN".replace(/,/g, ''),
+        FECAFILIACION: "FECAFILIACION".replace(/,/g, ''),
+        DIRECCION: "DIRECCION".replace(/,/g, ''),
+        TELEFONO: "TELEFONO".replace(/,/g, ''),
+        FICSISBEN: "FICSISBEN".replace(/,/g, ''),
+        ID_USUARIO: "ID_USUARIO".replace(/,/g, ''),
+        ID_VISITA: "ID_VISITA".replace(/,/g, ''),
+        OBSTET: "OBSTET".replace(/,/g, ''),
+        CAMAMA: "CAMAMA".replace(/,/g, ''),
+        CACUELLO: "CACUELLO".replace(/,/g, ''),
+        CARDIO: "CARDIO".replace(/,/g, ''),
+        ASMA: "ASMA".replace(/,/g, ''),
+        EPOC: "EPOC".replace(/,/g, ''),
+        HTA: "HTA".replace(/,/g, ''),
+        DB: "DB".replace(/,/g, ''),
+        MULTIPARAS: "MULTIPARAS".replace(/,/g, ''),
+        DPTO_SGR: "DPTO_SGR".replace(/,/g, ''),
+        MUNIC_SGR: "MUNIC_SGR".replace(/,/g, ''),
+        ZONA_SGR: "ZONA_SGR".replace(/,/g, ''),
+        ID_AREA: "ID_AREA".replace(/,/g, ''),
+        DIRECCION_SGR: "DIRECCION_SGR".replace(/,/g, ''),
+        TELEFONO1: "TELEFONO1".replace(/,/g, ''),
+        TELEFONO2: "TELEFONO2".replace(/,/g, ''),
+        EMAIL: "EMAIL".replace(/,/g, ''),
+        ID_VISITA_ME: "ID_VISITA_ME".replace(/,/g, ''),
+        FECVISITA_ME: "FECVISITA_ME".replace(/,/g, ''),
+        ID_VISITA_TF: "ID_VISITA_TF".replace(/,/g, ''),
+        FECVISITA_TF: "FECVISITA_TF".replace(/,/g, ''),
+        ID_VISITA_CE: "ID_VISITA_CE".replace(/,/g, ''),
+        FECVISITA_CE: "FECVISITA_CE".replace(/,/g, ''),
+        ID_VISITA_DI: "ID_VISITA_DI".replace(/,/g, ''),
+        FECVISITA_DI: "FECVISITA_DI".replace(/,/g, ''),
+        ID_VISITA_SD: "ID_VISITA_SD".replace(/,/g, ''),
+        FECVISITA_SD: "FECVISITA_SD".replace(/,/g, ''),
+        ID_VISITA_CA: "ID_VISITA_CA".replace(/,/g, ''),
+        FECVISITA_CA: "FECVISITA_CA".replace(/,/g, ''),
+        MUNICIPIO: "MUNICIPI".replace(/,/g, '')
+    };
+
+    itemsNotFormatted = [
+        {
+            "NUMFILA": "1",
+            "ID_SALUS": "9809D527C7A08145E053020213AC9A64",
+            "CARNET": "08001374584",
+            "TIPODOC": "CC",
+            "DOCUMENTO": "72336547",
+            "APELLIDO1": "CALDERON",
+            "APELLIDO2": "PADILLA",
+            "NOMBRE1": "HARLEN",
+            "NOMBRE2": "DIDIER",
+            "FECHANAC": "1980-01-31",
+            "SEXO": "M",
+            "DPTO": "08",
+            "ZONA": "U",
+            "ESTADO": "AC",
+            "CODINST": "ESS024",
+            "REGIMEN": "S",
+            "FECAFILIACION": "2012-12-01",
+            "DIRECCION": "CLL 8 19 22 - ALTO PARAISO - BARRIO ZONA URBANA",
+            "TELEFONO": "8734717",
+            "FICSISBEN": "",
+            "ID_USUARIO": "1628493",
+            "ID_VISITA": "",
+            "OBSTET": "",
+            "CAMAMA": "",
+            "CACUELLO": "",
+            "CARDIO": "",
+            "ASMA": "",
+            "EPOC": "",
+            "HTA": "",
+            "DB": "",
+            "MULTIPARAS": "",
+            "DPTO_SGR": "08",
+            "MUNIC_SGR": "141",
+            "ZONA_SGR": "U",
+            "ID_AREA": "15085",
+            "DIRECCION_SGR": "CL 8 19 22",
+            "TELEFONO1": "",
+            "TELEFONO2": "",
+            "EMAIL": "",
+            "ID_VISITA_ME": "0",
+            "FECVISITA_ME": "",
+            "ID_VISITA_TF": "4139716",
+            "FECVISITA_TF": "2020-09-24",
+            "ID_VISITA_CE": "1919007",
+            "FECVISITA_CE": "2017-09-19",
+            "ID_VISITA_DI": "0",
+            "FECVISITA_DI": "",
+            "ID_VISITA_SD": "0",
+            "FECVISITA_SD": "",
+            "ID_VISITA_CA": "0",
+            "FECVISITA_CA": "",
+            "MUNICIPIO": "CANDELARIA"
+        },
+        {
+            "NUMFILA": "2",
+            "ID_SALUS": "9809D5269CCF8145E053020213AC9A64",
+            "CARNET": "08141501807",
+            "TIPODOC": "CC",
+            "DOCUMENTO": "1045168918",
+            "APELLIDO1": "YANCE",
+            "APELLIDO2": "DOMINGUEZ",
+            "NOMBRE1": "ANDRES",
+            "NOMBRE2": "ALBERTO",
+            "FECHANAC": "1990-01-04",
+            "SEXO": "M",
+            "DPTO": "08",
+            "ZONA": "U",
+            "ESTADO": "AC",
+            "CODINST": "ESS024",
+            "REGIMEN": "S",
+            "FECAFILIACION": "2017-04-01",
+            "DIRECCION": "CL 5 # 21 10 - URB. SAN MIGUEL - SIN VEREDA",
+            "TELEFONO": "",
+            "FICSISBEN": "",
+            "ID_USUARIO": "3757179",
+            "ID_VISITA": "",
+            "OBSTET": "",
+            "CAMAMA": "",
+            "CACUELLO": "",
+            "CARDIO": "",
+            "ASMA": "",
+            "EPOC": "",
+            "HTA": "",
+            "DB": "",
+            "MULTIPARAS": "",
+            "DPTO_SGR": "08",
+            "MUNIC_SGR": "141",
+            "ZONA_SGR": "U",
+            "ID_AREA": "15085",
+            "DIRECCION_SGR": "CL 12 15 45",
+            "TELEFONO1": "",
+            "TELEFONO2": "",
+            "EMAIL": "",
+            "ID_VISITA_ME": "0",
+            "FECVISITA_ME": "",
+            "ID_VISITA_TF": "6184515",
+            "FECVISITA_TF": "2022-07-01",
+            "ID_VISITA_CE": "5261668",
+            "FECVISITA_CE": "2021-09-09",
+            "ID_VISITA_DI": "0",
+            "FECVISITA_DI": "",
+            "ID_VISITA_SD": "27340116",
+            "FECVISITA_SD": "2022-05-19 08:05:20.000000",
+            "ID_VISITA_CA": "25366736",
+            "FECVISITA_CA": "2021-09-17 18:45:45.000000",
+            "MUNICIPIO": "CANDELARIA"
+        },
+        {
+            "NUMFILA": "3",
+            "ID_SALUS": "9809D5268DFF8145E053020213AC9A64",
+            "CARNET": "08141504054",
+            "TIPODOC": "CC",
+            "DOCUMENTO": "1079910514",
+            "APELLIDO1": "CARRANZA",
+            "APELLIDO2": "ESCOBAR",
+            "NOMBRE1": "LUIS",
+            "NOMBRE2": "ARMANDO",
+            "FECHANAC": "1985-08-23",
+            "SEXO": "M",
+            "DPTO": "08",
+            "ZONA": "U",
+            "ESTADO": "AC",
+            "CODINST": "ESS024",
+            "REGIMEN": "S",
+            "FECAFILIACION": "2017-07-01",
+            "DIRECCION": "CLL 17 20 27",
+            "TELEFONO": "",
+            "FICSISBEN": "",
+            "ID_USUARIO": "3756691",
+            "ID_VISITA": "",
+            "OBSTET": "",
+            "CAMAMA": "",
+            "CACUELLO": "",
+            "CARDIO": "",
+            "ASMA": "",
+            "EPOC": "",
+            "HTA": "",
+            "DB": "",
+            "MULTIPARAS": "",
+            "DPTO_SGR": "08",
+            "MUNIC_SGR": "141",
+            "ZONA_SGR": "U",
+            "ID_AREA": "15085",
+            "DIRECCION_SGR": "CL 17 20 27",
+            "TELEFONO1": "",
+            "TELEFONO2": "",
+            "EMAIL": "",
+            "ID_VISITA_ME": "0",
+            "FECVISITA_ME": "",
+            "ID_VISITA_TF": "3991136",
+            "FECVISITA_TF": "2020-02-27",
+            "ID_VISITA_CE": "2151531",
+            "FECVISITA_CE": "2018-01-12",
+            "ID_VISITA_DI": "0",
+            "FECVISITA_DI": "",
+            "ID_VISITA_SD": "0",
+            "FECVISITA_SD": "",
+            "ID_VISITA_CA": "0",
+            "FECVISITA_CA": "",
+            "MUNICIPIO": "CANDELARIA"
+        },
+        {
+            "NUMFILA": "4",
+            "ID_SALUS": "9809D52490118145E053020213AC9A64",
+            "CARNET": "08141549244",
+            "TIPODOC": "CC",
+            "DOCUMENTO": "1045167359",
+            "APELLIDO1": "RUIZ",
+            "APELLIDO2": "MEDINA",
+            "NOMBRE1": "ELIZABETH",
+            "NOMBRE2": "",
+            "FECHANAC": "2003-05-17",
+            "SEXO": "F",
+            "DPTO": "08",
+            "ZONA": "U",
+            "ESTADO": "AC",
+            "CODINST": "ESS024",
+            "REGIMEN": "S",
+            "FECAFILIACION": "2019-04-01",
+            "DIRECCION": "CL 8 # 7 A 61 - BARRIO_S4 - SIN VEREDA",
+            "TELEFONO": "",
+            "FICSISBEN": "",
+            "ID_USUARIO": "3781762",
+            "ID_VISITA": "",
+            "OBSTET": "",
+            "CAMAMA": "",
+            "CACUELLO": "",
+            "CARDIO": "",
+            "ASMA": "",
+            "EPOC": "",
+            "HTA": "",
+            "DB": "",
+            "MULTIPARAS": "",
+            "DPTO_SGR": "08",
+            "MUNIC_SGR": "141",
+            "ZONA_SGR": "R",
+            "ID_AREA": "15212",
+            "DIRECCION_SGR": "CL 8 7 A 61",
+            "TELEFONO1": null,
+            "TELEFONO2": null,
+            "EMAIL": "",
+            "ID_VISITA_ME": "0",
+            "FECVISITA_ME": "",
+            "ID_VISITA_TF": "5691665",
+            "FECVISITA_TF": "2022-02-17",
+            "ID_VISITA_CE": "5227876",
+            "FECVISITA_CE": "2021-09-15",
+            "ID_VISITA_DI": "0",
+            "FECVISITA_DI": "",
+            "ID_VISITA_SD": "0",
+            "FECVISITA_SD": "",
+            "ID_VISITA_CA": "25567911",
+            "FECVISITA_CA": "2021-10-12 11:34:55.000000",
+            "MUNICIPIO": "CANDELARIA"
+        }
+    ];
+
+    var itemsFormatted = [];
+
+
+    for(var i in itemsNotFormatted) {
+        itemsFormatted.push(itemsNotFormatted[i]);
+    }
+    var fileTitle = 'Reporte_coosalud'; // or 'my-unique-title'
+
+    function generarCsv() {
+        exportCSVFile(headers, itemsFormatted, fileTitle); // call the exportCSVFile() function to process the JSON and trigger the download
+    }
+
+
+</script>
