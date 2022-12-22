@@ -17,11 +17,12 @@
     function convertToCSV(objArray) {
         var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
         var str = '';
+        var delimiter = '|'
 
         for (var i = 0; i < array.length; i++) {
             var line = '';
             for (var index in array[i]) {
-                if (line != '') line += ','
+                if (line != '') line += delimiter
 
                 line += array[i][index];
             }
@@ -114,7 +115,7 @@
         FECVISITA_SD: "FECVISITA_SD".replace(/,/g, ''),
         ID_VISITA_CA: "ID_VISITA_CA".replace(/,/g, ''),
         FECVISITA_CA: "FECVISITA_CA".replace(/,/g, ''),
-        MUNICIPIO: "MUNICIPI".replace(/,/g, '')
+        MUNICIPIO: "MUNICIPIO".replace(/,/g, '')
     };
 
     itemsNotFormatted = [
