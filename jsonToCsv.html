@@ -39,7 +39,9 @@
         }
 
         // Convert Object to JSON
-        var jsonObject = JSON.stringify(items);
+        var jsonObject = JSON.stringify(items, function (key, value) {
+            return (value === null) ? "" : value;
+        });
 
         var csv = this.convertToCSV(jsonObject);
 
