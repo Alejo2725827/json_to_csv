@@ -68,6 +68,7 @@
 
 
     function generarCsv() {
+
         var headers = {
             NUMFILA: "NUMFILA",
             ID_SALUS: "ID_SALUS",
@@ -126,6 +127,8 @@
         var itemsFormatted = [];
 
         itemsFormatted.push(headers)
+
+        //res is array data res = await getDataFetch('https://midata.com.json/getData');
 
         for(var i in res) {
             itemsFormatted.push(res[i]);
